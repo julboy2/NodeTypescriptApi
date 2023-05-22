@@ -4,10 +4,14 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
+import router from "./router";
 
 // 1. 앱시작
 const app = express();
+
+dotenv.config();
 
 app.use(
   cors({
@@ -37,3 +41,5 @@ const MONGO_URL = process.env.MONGO_URL;
 mongoose.Promise = Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on("error", (error: Error) => console.log(error));
+
+app.use("/", router());
